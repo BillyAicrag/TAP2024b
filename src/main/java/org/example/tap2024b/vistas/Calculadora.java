@@ -19,6 +19,9 @@ public class Calculadora extends Stage {
     private Scene escena;
     String[] strTeclas = {"7","8","9","*","4","5","6","/","1","2","3","-",".","0","=","+"};
     private Button btnBorrar = new Button("<-");
+    private double x = 0, y = 0, res = 0;
+    private String operacion;
+    private boolean flag = false;
 
     private void CrearUI(){
         arBtns = new Button[4][4];
@@ -28,8 +31,9 @@ public class Calculadora extends Stage {
         gdpTeclado = new GridPane();
         CrearTeclado();
 
-        btnBorrar.setOnAction(event -> txtPantalla.deleteText(txtPantalla.getLength() - 1,txtPantalla.getLength() - 1));
+        btnBorrar.setOnAction(event -> borrarPantalla());
         btnBorrar.setPrefSize(200,50);
+
         vBox = new VBox(txtPantalla,gdpTeclado,btnBorrar);
         vBox.setSpacing(1);
         escena = new Scene(vBox,200,270);
@@ -54,9 +58,69 @@ public class Calculadora extends Stage {
         this.show();
     }
 
+    private void borrarPantalla(){
+        txtPantalla.clear();
+        txtPantalla.setText("0");
+    }
+
     private void detectarTecla(String tecla) {
-        if (txtPantalla.getText().equals("0"))
-            txtPantalla.setText("");
-        txtPantalla.appendText(tecla);
+        if (detectarOperacion(tecla)){
+            flag = true;
+        } else {
+            if (flag)
+                txtPantalla.clear();
+            flag = false;
+            if (txtPantalla.getText().equals("0"))
+                txtPantalla.setText("");
+            txtPantalla.appendText(tecla);
+        }
+    }
+
+    private boolean detectarOperacion(String tecla) {
+        switch(tecla){
+            case "+":
+                operacion = "+";
+                x = Double.parseDouble(txtPantalla.getText());
+                return true;
+            case "-":
+                operacion = "-";
+                x = Double.parseDouble(txtPantalla.getText());
+                return true;
+            case "*":
+                operacion = "*";
+                x = Double.parseDouble(txtPantalla.getText());
+                return true;
+            case "/":
+                operacion = "/";
+                x = Double.parseDouble(txtPantalla.getText());
+                return true;
+            case "=":
+                y = Double.parseDouble(txtPantalla.getText());
+                realizarOperacion();
+                return true;
+            default:
+                return false;
+        }
+    }
+
+    private void realizarOperacion(){
+        if (!operacion.equals("")) {
+            switch (operacion) {
+                case "+":
+                    res = x + y;
+                    break;
+                case "-":
+                    res = x - y;
+                    break;
+                case "*":
+                    res = x * y;
+                    break;
+                case "/":
+                    res = x / y;
+                    break;
+            }
+            txtPantalla.setText("" + res);
+            operacion = "";
+        }
     }
 }
