@@ -20,7 +20,7 @@ public class Calculadora extends Stage {
     String[] strTeclas = {"7","8","9","*","4","5","6","/","1","2","3","-",".","0","=","+"};
     private Button btnBorrar = new Button("<-");
     private double x = 0, y = 0, res = 0;
-    private String operacion;
+    private String operacion = "";
     private boolean flag = false;
 
     private void CrearUI(){
@@ -61,6 +61,7 @@ public class Calculadora extends Stage {
     private void borrarPantalla(){
         txtPantalla.clear();
         txtPantalla.setText("0");
+
     }
 
     private void detectarTecla(String tecla) {
@@ -79,28 +80,45 @@ public class Calculadora extends Stage {
     private boolean detectarOperacion(String tecla) {
         switch(tecla){
             case "+":
+                if (!flag)
+                    if (!operacion.equals(""))
+                        resultado();
                 operacion = "+";
                 x = Double.parseDouble(txtPantalla.getText());
                 return true;
             case "-":
+                if (!flag)
+                    if (!operacion.equals(""))
+                        resultado();
                 operacion = "-";
                 x = Double.parseDouble(txtPantalla.getText());
                 return true;
             case "*":
+                if (!flag)
+                    if (!operacion.equals(""))
+                        resultado();
                 operacion = "*";
                 x = Double.parseDouble(txtPantalla.getText());
                 return true;
             case "/":
+                if (!flag)
+                    if (!operacion.equals(""))
+                        resultado();
                 operacion = "/";
                 x = Double.parseDouble(txtPantalla.getText());
                 return true;
             case "=":
-                y = Double.parseDouble(txtPantalla.getText());
-                realizarOperacion();
+                if(!flag)
+                    resultado();
                 return true;
             default:
                 return false;
         }
+    }
+
+    private void resultado(){
+        y = Double.parseDouble(txtPantalla.getText());
+        realizarOperacion();
     }
 
     private void realizarOperacion(){
