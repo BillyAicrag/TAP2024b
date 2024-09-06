@@ -18,10 +18,10 @@ public class Calculadora extends Stage {
     private VBox vBox;
     private Scene escena;
     String[] strTeclas = {"7","8","9","*","4","5","6","/","1","2","3","-",".","0","=","+"};
-    private Button btnBorrar = new Button("<-");
+    private Button btnBorrar;
     private double x = 0, y = 0, res = 0;
     private String operacion = "";
-    private boolean flag = false;
+    private boolean flag = false, punto = true;
 
     private void CrearUI(){
         arBtns = new Button[4][4];
@@ -31,12 +31,17 @@ public class Calculadora extends Stage {
         gdpTeclado = new GridPane();
         CrearTeclado();
 
+        btnBorrar = new Button("Clear");
         btnBorrar.setOnAction(event -> borrarPantalla());
-        btnBorrar.setPrefSize(200,50);
+        //btnBorrar.setPrefSize(190,50);
+        btnBorrar.setPrefWidth(btnBorrar.getPrefWidth());
+        btnBorrar.setId("font-button");
 
         vBox = new VBox(txtPantalla,gdpTeclado,btnBorrar);
-        vBox.setSpacing(1);
+        //vBox.setSpacing(1);
+        vBox.setAlignment(Pos.CENTER);
         escena = new Scene(vBox,200,270);
+        escena.getStylesheets().add(getClass().getResource("/styles/calculadora.css").toExternalForm());
     }
 
     private void CrearTeclado(){
@@ -65,15 +70,28 @@ public class Calculadora extends Stage {
     }
 
     private void detectarTecla(String tecla) {
-        if (detectarOperacion(tecla)){
-            flag = true;
+        if (tecla.equals(".")) {
+            if (punto) {
+                if (txtPantalla.getText().equals("")) {
+                    txtPantalla.appendText("0.");
+                } else {
+                    txtPantalla.appendText(".");
+                }
+                punto = false;
+            }
         } else {
-            if (flag)
-                txtPantalla.clear();
-            flag = false;
-            if (txtPantalla.getText().equals("0"))
-                txtPantalla.setText("");
-            txtPantalla.appendText(tecla);
+            if (detectarOperacion(tecla)) {
+                flag = true;
+            } else {
+                if (flag) {
+                    txtPantalla.clear();
+                    punto = true;
+                }
+                flag = false;
+                if (txtPantalla.getText().equals("0"))
+                    txtPantalla.setText("");
+                txtPantalla.appendText(tecla);
+            }
         }
     }
 

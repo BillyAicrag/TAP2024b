@@ -10,6 +10,8 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import org.example.tap2024b.vistas.Calculadora;
+import org.example.tap2024b.vistas.Loteria;
+import org.example.tap2024b.vistas.Lotery;
 
 import java.io.IOException;
 
@@ -18,13 +20,17 @@ public class HelloApplication extends Application {
     private BorderPane bdpPrincipal;
     private MenuBar mnbPrincipal;
     private Menu menCompetencia1,menCompetencia2,menSalir;
-    private MenuItem mitCalculadora;
+    private MenuItem mitCalculadora, mitLoteria, mitLotery;
 
     public void CrearUI(){
         mitCalculadora = new MenuItem("Calculadora");
         mitCalculadora.setOnAction(event -> new Calculadora());
+        mitLoteria = new MenuItem("Loteria");
+        mitLoteria.setOnAction(event -> new Loteria());
+        mitLotery = new MenuItem("Lotery");
+        mitLotery.setOnAction(event -> new Lotery());
         menCompetencia1 = new Menu("Competencia 1");
-        menCompetencia1.getItems().addAll(mitCalculadora);
+        menCompetencia1.getItems().addAll(mitCalculadora, mitLoteria, mitLotery);
         mnbPrincipal = new MenuBar(menCompetencia1);
         bdpPrincipal = new BorderPane();
         bdpPrincipal.setTop(mnbPrincipal);
