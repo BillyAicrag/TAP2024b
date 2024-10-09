@@ -4,6 +4,8 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -11,7 +13,7 @@ import javafx.stage.Stage;
 
 public class Loteria extends Stage {
     private GridPane[] gdpTabla = new GridPane[5];
-    private VBox vbxIzq, vbxDer, vbxMostrar;
+    private VBox vbxIzq, vbxDer, vbxMostrar, vbxMazo;
     private VBox[] vbxTablas = new VBox[5];
     private HBox hbxPrincipal, hbxBotones;
     private Button[][] arBtnImagenes = new Button[3][4];
@@ -23,6 +25,8 @@ public class Loteria extends Stage {
     private int[]  arRelleno = {0,0,0,0,0};
     private int actual = 0 ;
     private String carta = "20";
+    private Label lblTimer;
+    private ImageView imvMazo;
 
 
     public Loteria(){
@@ -118,6 +122,18 @@ public class Loteria extends Stage {
                 }
             }
         }
+    }
+
+
+    private void CrearMazo() {
+        Image imgMazo = new Image(getClass().getResource("/images/lotes/mystery.png").toString());
+        lblTimer = new Label("00:00");
+        imvMazo = new ImageView(imgMazo);
+        imvMazo.setFitHeight(400);
+        imvMazo.setFitWidth(400);
+        btnInicio = new Button("Iniciar Juego");
+        vbxMazo = new VBox(lblTimer,imvMazo,btnInicio);
+        vbxMazo.setSpacing(20);
     }
 
 }

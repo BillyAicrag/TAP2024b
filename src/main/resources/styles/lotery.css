@@ -1,0 +1,22 @@
+.root{
+    -fx-background-image: url('https://static.vecteezy.com/system/resources/previews/012/487/416/non_2x/colorful-papel-picado-mexico-background-free-vector.jpg');
+    -fx-background-repeat: stretch,no-repeat;
+    -fx-background-size: auto, 200px;
+}
+
+#button {
+    -fx-background-color: red;
+    -fx-border-color: black ;
+}
+
+.label{
+    -fx-text-fill: black;
+    -fx-background-color: white;
+    -fx-border-color: black;
+}
+
+.vbox{
+    -fx-background-color: white;
+    -fx-border-color: black;
+    -fx-border-width: 3px;
+}

@@ -21,7 +21,7 @@ public class Calculadora extends Stage {
     private Button btnBorrar;
     private double x = 0, y = 0, res = 0;
     private String operacion = "";
-    private boolean flag = false, punto = true;
+    private boolean flag = false;
 
     private void CrearUI(){
         arBtns = new Button[4][4];
@@ -41,7 +41,7 @@ public class Calculadora extends Stage {
         //vBox.setSpacing(1);
         vBox.setAlignment(Pos.CENTER);
         escena = new Scene(vBox,200,270);
-        escena.getStylesheets().add(getClass().getResource("/styles/calculadora.css").toExternalForm());
+        //escena.getStylesheets().add(getClass().getResource("/styles/calculadora.css").toExternalForm());
     }
 
     private void CrearTeclado(){
@@ -70,29 +70,25 @@ public class Calculadora extends Stage {
     }
 
     private void detectarTecla(String tecla) {
-        if (tecla.equals(".")) {
-            if (punto) {
-                if (txtPantalla.getText().equals("")) {
-                    txtPantalla.appendText("0.");
-                } else {
-                    txtPantalla.appendText(".");
-                }
-                punto = false;
-            }
-        } else {
             if (detectarOperacion(tecla)) {
                 flag = true;
             } else {
                 if (flag) {
                     txtPantalla.clear();
-                    punto = true;
                 }
                 flag = false;
                 if (txtPantalla.getText().equals("0"))
                     txtPantalla.setText("");
-                txtPantalla.appendText(tecla);
+
+
+                if (tecla.equals(".")) {
+                    if (!txtPantalla.getText().contains(".")) {
+                        txtPantalla.appendText(".");
+                    }
+                } else {
+                    txtPantalla.appendText(tecla);
+                }
             }
-        }
     }
 
     private boolean detectarOperacion(String tecla) {
