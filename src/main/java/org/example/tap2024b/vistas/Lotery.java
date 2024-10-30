@@ -1,5 +1,10 @@
 package org.example.tap2024b.vistas;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.application.Platform;
+import javafx.concurrent.Task;
+import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -12,12 +17,15 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import org.kordamp.bootstrapfx.BootstrapFX;
 import org.kordamp.bootstrapfx.scene.layout.Panel;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class Lotery extends Stage {
 
@@ -41,7 +49,10 @@ public class Lotery extends Stage {
     private Panel pnlPrincipal;
     private boolean removido= false;
     private int minutos = 0, segundos = 0;
-
+    Timeline timeline = new Timeline(new KeyFrame(
+            Duration.seconds(1),
+            ae -> System.out.println("¡Hecho!")
+    ));
 
 
     public Lotery(){
@@ -92,7 +103,53 @@ public class Lotery extends Stage {
         lblTimer = new Label("00:00");
         btnIniciar = new Button();
         //btnIniciar.setOnAction(event -> mostrar());
-        btnIniciar.setOnAction(event -> iniciarPartida());
+        //btnIniciar.setOnAction(event -> iniciarPartida());
+
+
+
+
+        Thread hilo = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                iniciarPartida();
+            }
+        });
+
+        //btnIniciar.setOnAction(event -> hilo.start());
+        btnIniciar.setOnAction(event -> Platform.runLater(new Runnable() {public void run() {iniciarPartida();}}));
+        //Platform.runLater(new Runnable() {public void run() {iniciarPartida();}});
+
+
+        //timer.play();
+
+        /*
+        btnIniciar.setOnAction(event -> {
+            // Crear una tarea en segundo plano
+            Task<Void> tareaEnSegundoPlano = new Task<>() {
+                @Override
+                protected Void call() throws Exception {
+                    iniciarPartida();
+                    return null;
+                }
+
+                @Override
+                protected void succeeded() {
+                    System.out.println("Tarea completada.");
+                }
+
+                @Override
+                protected void failed() {
+                    System.out.println("Error en la tarea.");
+                }
+            };
+
+            // Ejecutar la tarea en un nuevo hilo
+            new Thread(tareaEnSegundoPlano).start();
+            System.out.println("Ejecutando tarea...");
+        });
+        */
+
+
         //Boton inicial partida--------------------------------------------------------------------------
 
         btnIniciar.getStyleClass().setAll("btn","btn-danger");
@@ -227,6 +284,7 @@ public class Lotery extends Stage {
             for (int i = 0; i < 5; i++) {
                 Thread.sleep(1 * 1000);
                 //rootplatform thread
+                //timeline.play();
                 cambiarTiempo();
             }
         } catch (Exception e) {
@@ -293,4 +351,33 @@ public class Lotery extends Stage {
         }
     }
 
+    //------------------------------------------------------------------------------------------------------------------
+    /*
+        Button button = new Button("Iniciar tarea en segundo plano");
+
+        button.setOnAction(event -> {
+            // Creamos una tarea
+            Task<Void> backgroundTask = new Task<Void>() {
+                @Override
+                protected Void call() throws Exception {
+                    // Aquí va el código que quieres ejecutar en segundo plano
+                    for (int i = 0; i < 3; i++) {
+                        mostrar();
+                        esperar();
+                    }
+                    return null;
+                }
+            };
+
+            // Opción: Agrega un EventHandler para cuando la tarea termine
+            backgroundTask.setOnSucceeded(e -> System.out.println("Tarea completada!"));
+
+            // Ejecutamos la tarea en un nuevo hilo
+            new Thread(backgroundTask).start();
+        });
+    */
+    //------------------------------------------------------------------------------------------------------------------
+    public void platform() {
+
+    }
 }

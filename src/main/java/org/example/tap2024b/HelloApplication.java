@@ -9,11 +9,9 @@ import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
+import org.example.tap2024b.components.CorredorThread;
 import org.example.tap2024b.models.Conexion;
-import org.example.tap2024b.vistas.Calculadora;
-import org.example.tap2024b.vistas.ListaClientes;
-import org.example.tap2024b.vistas.Loteria;
-import org.example.tap2024b.vistas.Lotery;
+import org.example.tap2024b.vistas.*;
 
 import java.io.IOException;
 
@@ -22,7 +20,7 @@ public class HelloApplication extends Application {
     private BorderPane bdpPrincipal;
     private MenuBar mnbPrincipal;
     private Menu menCompetencia1,menCompetencia2,menSalir;
-    private MenuItem mitCalculadora, mitLoteria, mitLotery, mitSpotify;
+    private MenuItem mitCalculadora, mitLoteria, mitLotery, mitSpotify, mitPista, mitBuscaminas;
 
     public void CrearUI(){
         mitCalculadora = new MenuItem("Calculadora");
@@ -35,7 +33,14 @@ public class HelloApplication extends Application {
         mitSpotify.setOnAction(event -> new ListaClientes());
         menCompetencia1 = new Menu("Competencia 1");
         menCompetencia1.getItems().addAll(mitCalculadora, mitLoteria, mitLotery, mitSpotify);
-        mnbPrincipal = new MenuBar(menCompetencia1);
+
+        mitBuscaminas = new MenuItem("Buscaminas");
+        mitBuscaminas.setOnAction(event -> new Buscaminas());
+        mitPista = new MenuItem("Pista");
+        mitPista.setOnAction(event -> new Pista());
+        menCompetencia2 = new Menu("Competencia 2");
+        menCompetencia2.getItems().addAll(mitPista, mitBuscaminas);
+        mnbPrincipal = new MenuBar(menCompetencia1, menCompetencia2);
         bdpPrincipal = new BorderPane();
         bdpPrincipal.setTop(mnbPrincipal);
     }
