@@ -4,31 +4,31 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableCell;
-import org.example.tap2024b.models.ClienteDAO;
-import org.example.tap2024b.vistas.FormCliente;
+import org.example.tap2024b.models.VentaDAO;
+import org.example.tap2024b.vistas.FormVenta;
 
 import java.util.Optional;
 
-public class ButtonCell extends TableCell<ClienteDAO,String> {
+public class ButtonCellVta extends TableCell<VentaDAO,String> {
     Button btnCelda;
 
-    public ButtonCell(String str) {
+    public ButtonCellVta(String str) {
         btnCelda = new Button(str);
         btnCelda.setOnAction(event -> eventoBoton(str));
     }
 
     private void eventoBoton(String str) {
-        ClienteDAO objCte = this.getTableView().getItems().get(this.getIndex());
+        VentaDAO objVta = this.getTableView().getItems().get(this.getIndex());
         if (str.equals("Editar")){
-            new FormCliente(this.getTableView(), objCte);
+            new FormVenta(this.getTableView(), objVta);
         } else {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Mensaje del sistema");
             alert.setContentText("¿Deseas eliminar el registro seleccionado?");
             Optional<ButtonType> option = alert.showAndWait();
             if (option.get() == ButtonType.OK) {
-                objCte.DELETE();
-                this.getTableView().setItems(objCte.SELECTALL());
+                objVta.DELETE();
+                this.getTableView().setItems(objVta.SELECTALL());
                 this.getTableView().refresh();
             }
         }

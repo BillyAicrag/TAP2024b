@@ -79,7 +79,4 @@ public class FormCliente extends Stage {
         tbvCliente.setItems(objCte.SELECTALL());
         tbvCliente.refresh();
     }
-
-
-
 }

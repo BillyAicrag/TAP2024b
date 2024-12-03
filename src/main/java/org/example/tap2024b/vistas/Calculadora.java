@@ -83,6 +83,9 @@ public class Calculadora extends Stage {
 
                 if (tecla.equals(".")) {
                     if (!txtPantalla.getText().contains(".")) {
+                        if(txtPantalla.getText().equals("")) {
+                            txtPantalla.appendText("0.");
+                        }
                         txtPantalla.appendText(".");
                     }
                 } else {

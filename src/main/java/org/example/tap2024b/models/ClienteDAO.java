@@ -2,7 +2,6 @@ package org.example.tap2024b.models;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
