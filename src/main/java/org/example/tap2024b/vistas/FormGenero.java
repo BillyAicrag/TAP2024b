@@ -2,10 +2,7 @@ package org.example.tap2024b.vistas;
 
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import org.example.tap2024b.models.GeneroDAO;
@@ -39,7 +36,8 @@ public class FormGenero extends Stage {
         txtNomGen.setPromptText("Nombre del Genero");
         btnGuardar = new Button("Guardar");
         btnGuardar.setOnAction(event -> GuardarGenero());
-        vBox = new VBox(txtNomGen,btnGuardar);
+        Label lbl = new Label("Nombre del genero");
+        vBox = new VBox(lbl, txtNomGen, btnGuardar);
         vBox.setPadding(new Insets(10));
         vBox.setSpacing(10);
         escena = new Scene(vBox, 300, 150);

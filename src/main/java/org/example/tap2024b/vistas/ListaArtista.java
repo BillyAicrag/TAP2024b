@@ -8,7 +8,9 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Callback;
+import org.example.tap2024b.components.ButtonCellAl;
 import org.example.tap2024b.components.ButtonCellArt;
+import org.example.tap2024b.models.AlbumDAO;
 import org.example.tap2024b.models.ArtistaDAO;
 
 public class ListaArtista extends Stage {
@@ -44,7 +46,7 @@ public class ListaArtista extends Stage {
 
     private void CrearTable() {
         ArtistaDAO objArt = new ArtistaDAO();
-        TableColumn<ArtistaDAO,String> tbcNomArt = new TableColumn<>("Artista");
+        TableColumn<ArtistaDAO,String> tbcNomArt = new TableColumn<>("Artista/Banda");
         tbcNomArt.setCellValueFactory(new PropertyValueFactory<>("nomArt"));
 
         TableColumn<ArtistaDAO,String> tbcNacionalidadArt = new TableColumn<>("Nacionalidad");
@@ -58,6 +60,14 @@ public class ListaArtista extends Stage {
             }
         });
 
+        TableColumn<ArtistaDAO,String> tbcLista = new TableColumn<>("");
+        tbcLista.setCellFactory(new Callback<TableColumn<ArtistaDAO, String>, TableCell<ArtistaDAO, String>>() {
+            @Override
+            public TableCell<ArtistaDAO, String> call(TableColumn<ArtistaDAO, String> artistaDAOStringTableColumn) {
+                return new ButtonCellArt("Canciones");
+            }
+        });
+
         TableColumn<ArtistaDAO,String> tbcEliminar = new TableColumn<>("");
         tbcEliminar.setCellFactory(new Callback<TableColumn<ArtistaDAO, String>, TableCell<ArtistaDAO, String>>() {
             @Override
@@ -66,7 +76,7 @@ public class ListaArtista extends Stage {
             }
         });
 
-        tbvArtista.getColumns().addAll(tbcNomArt, tbcNacionalidadArt, tbcEditar, tbcEliminar);
+        tbvArtista.getColumns().addAll(tbcNomArt, tbcNacionalidadArt, tbcLista, tbcEditar, tbcEliminar);
         tbvArtista.setItems(objArt.SELECTALL());
     }
 }

@@ -5,12 +5,15 @@ import javafx.collections.ObservableList;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class VentaDAO {
     private int idVta;
     private String fechaVta;
     private double totalVta;
     private String nomCte;
+    private int idCliente;
 
     public int getIdVta() {
         return idVta;
@@ -44,22 +47,37 @@ public class VentaDAO {
         this.nomCte = nomCte;
     }
 
+    public int getIdCliente() {
+        return idCliente;
+    }
+
+    public void setIdCliente(int idCliente) {
+        this.idCliente = idCliente;
+    }
+
     public int INSERT() {
         int rowCount;
 
-        String idCteString = "SELECT idCte FROM cliente where nomCte = " + this.nomCte;
+        String querys = "SELECT idCte FROM cliente where nomCte = '" + this.nomCte + "'";
+        String idCliente = "";
         try {
-            String query = idCteString;
             Statement stmt = Conexion.connection.createStatement();
-            ResultSet rs = stmt.executeQuery(query);
-            idCteString = rs.getString("idCte");
+            ResultSet rs = stmt.executeQuery(querys);
+            if (rs.next())
+                idCliente = rs.getString("idCte");
         }catch (Exception e ){
             e.printStackTrace();
         }
-        int idCte = Integer.parseInt(idCteString);
+        int idCte = Integer.parseInt(idCliente);
+
+        LocalDate fechaActual = LocalDate.now();
+
+        // Formatear la fecha al formato "yyyy-MM-dd"
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        String fechaFormateada = fechaActual.format(formatter);
 
         String query = "INSERT INTO venta(fechaVta, totalVta, idCte)" +
-                " VALUES('" + this.fechaVta + "'," + this.totalVta + ",'" + idCte + "')";
+                " VALUES('" + fechaFormateada + "'," + this.totalVta + ",'" + idCte + "')";
         try {
             Statement stmt = Conexion.connection.createStatement();
             rowCount = stmt.executeUpdate(query);
@@ -70,40 +88,6 @@ public class VentaDAO {
         return rowCount;
     }
 
-    public void UPDATE(){
-
-        String idCteString = "SELECT idCte FROM cliente where nomCte = " + this.nomCte;
-        try {
-            String query = idCteString;
-            Statement stmt = Conexion.connection.createStatement();
-            ResultSet rs = stmt.executeQuery(query);
-            idCteString = rs.getString("idCte");
-        }catch (Exception e ){
-            e.printStackTrace();
-        }
-        int idCte = Integer.parseInt(idCteString);
-
-        String query = "UPDATE venta SET fechaVta = '" + this.fechaVta + "', " +
-                "totalVta = " + this.totalVta + ", idCte = " + idCte +
-                " WHERE idVta = " + this.idVta;
-        try {
-            Statement stmt = Conexion.connection.createStatement();
-            stmt.executeUpdate(query);
-        }catch (Exception e ){
-            e.printStackTrace();
-        }
-    }
-
-    public void DELETE(){
-        String query = "DELETE FROM venta WHERE idVta = " + this.idVta;
-        try {
-            Statement stmt = Conexion.connection.createStatement();
-            stmt.executeUpdate(query);
-        }catch (Exception e ){
-            e.printStackTrace();
-        }
-    }
-
     public ObservableList<VentaDAO> SELECTALL(){
         VentaDAO objVta;
         String query = "SELECT * FROM venta";
@@ -112,12 +96,14 @@ public class VentaDAO {
             Statement stmt = Conexion.connection.createStatement();
             ResultSet res = stmt.executeQuery(query);
             while(res.next()) {
-                String nomCteString = "SELECT nomCte FROM cliente where idCte = " + res.getInt(4);
+
+                String querys = "SELECT nomCte FROM cliente where idCte = " + res.getInt(4);
+                String nombreCliente = "";
                 try {
-                    String querys = nomCteString;
                     Statement stm = Conexion.connection.createStatement();
                     ResultSet rs = stm.executeQuery(querys);
-                    nomCteString = rs.getString("nomCte");
+                    if (rs.next())
+                        nombreCliente = rs.getString("nomCte");
                 }catch (Exception e ){
                     e.printStackTrace();
                 }
@@ -126,12 +112,31 @@ public class VentaDAO {
                 objVta.idVta = res.getInt(1);
                 objVta.fechaVta = res.getString(2);
                 objVta.totalVta = res.getDouble(3);
-                objVta.nomCte = nomCteString;
+                objVta.nomCte = nombreCliente;
+                objVta.idCliente = res.getInt(4);
                 listaV.add(objVta);
             }
         }catch (Exception e ){
             e.printStackTrace();
         }
         return listaV;
+    }
+
+    public int SELECTVENTAS(){
+        VentaDAO objVta;
+        String query = "SELECT * FROM venta";
+        int venta = 0;
+        try {
+            Statement stmt = Conexion.connection.createStatement();
+            ResultSet res = stmt.executeQuery(query);
+            while(res.next()) {
+                objVta = new VentaDAO();
+                objVta.idVta = res.getInt(1);
+                venta = objVta.idVta;
+            }
+        }catch (Exception e ){
+            e.printStackTrace();
+        }
+        return venta;
     }
 }

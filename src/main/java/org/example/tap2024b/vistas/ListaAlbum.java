@@ -58,6 +58,14 @@ public class ListaAlbum extends Stage {
             }
         });
 
+        TableColumn<AlbumDAO,String> tbcLista = new TableColumn<>("");
+        tbcLista.setCellFactory(new Callback<TableColumn<AlbumDAO, String>, TableCell<AlbumDAO, String>>() {
+            @Override
+            public TableCell<AlbumDAO, String> call(TableColumn<AlbumDAO, String> albumDAOStringTableColumn) {
+                return new ButtonCellAl("Canciones");
+            }
+        });
+
         TableColumn<AlbumDAO,String> tbcEliminar = new TableColumn<>("");
         tbcEliminar.setCellFactory(new Callback<TableColumn<AlbumDAO, String>, TableCell<AlbumDAO, String>>() {
             @Override
@@ -66,7 +74,7 @@ public class ListaAlbum extends Stage {
             }
         });
 
-        tbvAlbum.getColumns().addAll(tbcNomAl, tbcFechaAl, tbcEditar, tbcEliminar);
+        tbvAlbum.getColumns().addAll(tbcNomAl, tbcFechaAl, tbcLista, tbcEditar, tbcEliminar);
         tbvAlbum.setItems(objAl.SELECTALL());
     }
 }

@@ -58,7 +58,7 @@ public class FormCancion extends Stage {
         vBox = new VBox(txtNomCan,txtDuracionCan,txtFechaCan,txtCostoCan,txtNomGen,btnGuardar);
         vBox.setPadding(new Insets(10));
         vBox.setSpacing(10);
-        escena = new Scene(vBox, 300, 150);
+        escena = new Scene(vBox, 300, 300);
     }
 
     private void GuardarCancion() {

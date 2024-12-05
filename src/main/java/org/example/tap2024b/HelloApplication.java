@@ -30,7 +30,7 @@ public class HelloApplication extends Application {
         mitLotery = new MenuItem("Lotery");
         mitLotery.setOnAction(event -> new Lotery());
         mitSpotify = new MenuItem("Spotify");
-        mitSpotify.setOnAction(event -> new ListaClientes());
+        mitSpotify.setOnAction(event -> new Spotify());
         menCompetencia1 = new Menu("Competencia 1");
         menCompetencia1.getItems().addAll(mitCalculadora, mitLoteria, mitLotery, mitSpotify);
 

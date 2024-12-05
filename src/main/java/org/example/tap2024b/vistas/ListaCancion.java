@@ -39,7 +39,7 @@ public class ListaCancion extends Stage {
         CrearTable();
 
         vbx = new VBox(tlbMenu,tbvCancion);
-        escena = new Scene(vbx, 500, 500);
+        escena = new Scene(vbx, 800, 500);
     }
 
     private void CrearTable() {
@@ -59,6 +59,12 @@ public class ListaCancion extends Stage {
         TableColumn<CancionDAO,String> tbcNomGen = new TableColumn<>("Genero");
         tbcNomGen.setCellValueFactory(new PropertyValueFactory<>("nomGen"));
 
+        TableColumn<CancionDAO,String> tbcNomArt = new TableColumn<>("Artista/Banda");
+        tbcNomArt.setCellValueFactory(new PropertyValueFactory<>("nomArt"));
+
+        TableColumn<CancionDAO,String> tbcNomAl = new TableColumn<>("Album");
+        tbcNomAl.setCellValueFactory(new PropertyValueFactory<>("nomAl"));
+
         TableColumn<CancionDAO,String> tbcEditar = new TableColumn<>("");
         tbcEditar.setCellFactory(new Callback<TableColumn<CancionDAO, String>, TableCell<CancionDAO, String>>() {
             @Override
@@ -75,7 +81,7 @@ public class ListaCancion extends Stage {
             }
         });
 
-        tbvCancion.getColumns().addAll(tbcNomCan, tbcDuracionCan, tbcFechaCan, tbcCostoCan, tbcNomGen, tbcEditar, tbcEliminar);
+        tbvCancion.getColumns().addAll(tbcNomCan, tbcNomArt, tbcNomAl, tbcDuracionCan, tbcFechaCan, tbcCostoCan, tbcNomGen, tbcEditar, tbcEliminar);
         tbvCancion.setItems(objCan.SELECTALL());
     }
 }
