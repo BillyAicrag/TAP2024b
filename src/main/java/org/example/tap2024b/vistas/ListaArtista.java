@@ -41,7 +41,7 @@ public class ListaArtista extends Stage {
         CrearTable();
 
         vbx = new VBox(tlbMenu,tbvArtista);
-        escena = new Scene(vbx, 500, 500);
+        escena = new Scene(vbx, 500, 400);
     }
 
     private void CrearTable() {

@@ -90,6 +90,7 @@ public class DetalleDAO {
         return rowCount;
     }
 
+    /*
     public void DELETE(){
 
         String queryss = "SELECT idCan FROM cancion where nomCan = '" + this.nomCan + "'";
@@ -112,6 +113,7 @@ public class DetalleDAO {
             e.printStackTrace();
         }
     }
+     */
 
     public ObservableList<DetalleDAO> SELECTALL(int idVta){
         DetalleDAO objDet;

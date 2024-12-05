@@ -39,7 +39,7 @@ public class ListaCancion extends Stage {
         CrearTable();
 
         vbx = new VBox(tlbMenu,tbvCancion);
-        escena = new Scene(vbx, 800, 500);
+        escena = new Scene(vbx, 840, 420);
     }
 
     private void CrearTable() {

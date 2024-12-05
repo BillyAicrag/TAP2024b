@@ -31,7 +31,7 @@ public class ListaDetalle extends Stage {
         CrearTable();
 
         vbx = new VBox(tbvDetalle);
-        escena = new Scene(vbx, 600, 500);
+        escena = new Scene(vbx, 610, 400);
     }
 
     private void CrearTable() {

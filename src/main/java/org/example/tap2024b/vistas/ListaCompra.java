@@ -67,11 +67,12 @@ public class ListaCompra extends Stage {
         hbxInferior = new HBox(btnPay, lblTotal);
         hbxInferior.setAlignment(Pos.CENTER);
         hbxInferior.setSpacing(10);
+        tbvCompra.setPrefWidth(760);
         hbx = new HBox(tbvCompra, tbvCarrito);
         hbx.setAlignment(Pos.CENTER);
         vbx = new VBox(tlbMenu, hbx, hbxInferior);
         vbx.setSpacing(10);
-        escena = new Scene(vbx, 1150, 500);
+        escena = new Scene(vbx, 1300, 500);
     }
 
     private void actualizarVentas() {

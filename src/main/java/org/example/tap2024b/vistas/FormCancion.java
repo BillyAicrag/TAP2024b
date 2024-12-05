@@ -9,6 +9,10 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import org.example.tap2024b.models.CancionDAO;
+import org.example.tap2024b.models.Conexion;
+
+import java.sql.ResultSet;
+import java.sql.Statement;
 
 public class FormCancion extends Stage {
 
@@ -54,11 +58,30 @@ public class FormCancion extends Stage {
         txtNomGen = new TextField();
         txtNomGen.setPromptText("Genero de la cancion");
         btnGuardar = new Button("Guardar");
-        btnGuardar.setOnAction(event -> GuardarCancion());
+        btnGuardar.setOnAction(event -> comprobar());
         vBox = new VBox(txtNomCan,txtDuracionCan,txtFechaCan,txtCostoCan,txtNomGen,btnGuardar);
         vBox.setPadding(new Insets(10));
         vBox.setSpacing(10);
         escena = new Scene(vBox, 300, 300);
+    }
+
+    private void comprobar() {
+        String queryss = "SELECT * FROM genero where nomGen = '" + txtNomGen.getText() + "'";
+        try {
+            Statement stmt = Conexion.connection.createStatement();
+            ResultSet rs = stmt.executeQuery(queryss);
+            if (!rs.next()) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setHeaderText(null);
+                alert.setTitle("Error");
+                alert.setContentText("El genero que ingreso no existe");
+                alert.showAndWait();
+            } else {
+                GuardarCancion();
+            }
+        }catch (Exception e ){
+            e.printStackTrace();
+        }
     }
 
     private void GuardarCancion() {
